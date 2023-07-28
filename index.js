@@ -32,7 +32,20 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
         const productsCollection = client.db('Moon_Tech_Redux_Thunk').collection('products');
-        
+
+        app.post("/product", async (req, res) => {
+            const product = req.body;
+            const result = await productsCollection.insertOne(product);
+            res.send(result);
+        });
+
+        app.delete("/product/:id", async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) };
+            const result = await productsCollection.deleteOne(filter);
+            res.send(result);
+        });
+
         app.get('/products', async (req, res) => {
             const query = {}
             const result = await productsCollection.find(query).toArray()
