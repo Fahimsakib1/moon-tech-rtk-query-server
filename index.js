@@ -39,6 +39,12 @@ async function run() {
             res.send(result);
         });
 
+        app.get('/products', async (req, res) => {
+            const query = {}
+            const result = await productsCollection.find(query).toArray()
+            res.send(result);
+        })
+
         app.delete("/product/:id", async (req, res) => {
             const id = req.params.id;
             const filter = { _id: new ObjectId(id) };
@@ -46,9 +52,35 @@ async function run() {
             res.send(result);
         });
 
-        app.get('/products', async (req, res) => {
-            const query = {}
-            const result = await productsCollection.find(query).toArray()
+        app.get('/allProducts/product/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) };
+            const result = await productsCollection.findOne(filter);
+            res.send(result);
+        })
+
+        //Update a Product
+        app.put('/updateProduct/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) };
+            const updateProductInfo = req.body;
+            const options = { upsert: true }
+            const updatedDoc = {
+                $set: {
+                    model: updateProductInfo.model,
+                    image: updateProductInfo.image,
+                    status: updateProductInfo.status,
+                    brand: updateProductInfo.brand,
+                    keyFeature: [
+                        updateProductInfo.keyFeature[0],
+                        updateProductInfo.keyFeature[1],
+                        updateProductInfo.keyFeature[2],
+                        updateProductInfo.keyFeature[3],
+                    ],
+                }
+            }
+
+            const result = await productsCollection.updateOne(filter, updatedDoc, options);
             res.send(result);
         })
 
