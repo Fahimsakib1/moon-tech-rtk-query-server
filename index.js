@@ -84,6 +84,20 @@ async function run() {
             res.send(result);
         })
 
+        //get a product by brand name
+        app.get('/searchProducts/:search', async (req, res) => {
+            const search = req.params.search;
+            console.log("Search", search);
+            const query = { brand: search };
+            const result = await productsCollection.find(query).toArray();
+            if(result.length === 0) {
+                const message = "No Product Found. Please Search With Correct Input"
+                return res.send({ acknowledged: false, message });
+            }
+            console.log("Result: ", result);
+            res.send(result);
+        })
+
     }
     finally {
 
