@@ -84,6 +84,8 @@ async function run() {
             res.send(result);
         })
 
+        
+
         //get a product by brand name
         app.get('/searchProducts/:search', async (req, res) => {
             const search = req.params.search;
