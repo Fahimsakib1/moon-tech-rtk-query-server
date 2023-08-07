@@ -33,7 +33,7 @@ async function run() {
     try {
         const productsCollection = client.db('Moon_Tech_Redux_Thunk').collection('products');
 
-        app.post("/product", async (req, res) => {
+        app.post("/addProduct", async (req, res) => {
             const product = req.body;
             const result = await productsCollection.insertOne(product);
             res.send(result);
@@ -60,10 +60,11 @@ async function run() {
         })
 
         //Update a Product
-        app.put('/updateProduct/:id', async (req, res) => {
+        app.patch('/updateProduct/:id', async (req, res) => {
             const id = req.params.id;
             const filter = { _id: new ObjectId(id) };
             const updateProductInfo = req.body;
+            console.log("Update Product: ", updateProductInfo);
             const options = { upsert: true }
             const updatedDoc = {
                 $set: {
@@ -71,12 +72,12 @@ async function run() {
                     image: updateProductInfo.image,
                     status: updateProductInfo.status,
                     brand: updateProductInfo.brand,
-                    keyFeature: [
-                        updateProductInfo.keyFeature[0],
-                        updateProductInfo.keyFeature[1],
-                        updateProductInfo.keyFeature[2],
-                        updateProductInfo.keyFeature[3],
-                    ],
+                    // keyFeature: [
+                    //     updateProductInfo.keyFeature[0],
+                    //     updateProductInfo.keyFeature[1],
+                    //     updateProductInfo.keyFeature[2],
+                    //     updateProductInfo.keyFeature[3],
+                    // ],
                 }
             }
 
