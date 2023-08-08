@@ -60,7 +60,7 @@ async function run() {
         })
 
         //Update a Product
-        app.patch('/updateProduct/:id', async (req, res) => {
+        app.put('/updateProduct/:id', async (req, res) => {
             const id = req.params.id;
             const filter = { _id: new ObjectId(id) };
             const updateProductInfo = req.body;
@@ -72,12 +72,13 @@ async function run() {
                     image: updateProductInfo.image,
                     status: updateProductInfo.status,
                     brand: updateProductInfo.brand,
-                    // keyFeature: [
-                    //     updateProductInfo.keyFeature[0],
-                    //     updateProductInfo.keyFeature[1],
-                    //     updateProductInfo.keyFeature[2],
-                    //     updateProductInfo.keyFeature[3],
-                    // ],
+                    keyFeature: [
+                        updateProductInfo.keyFeature[0],
+                        updateProductInfo.keyFeature[1],
+                        updateProductInfo.keyFeature[2],
+                        updateProductInfo.keyFeature[3],
+                    ],
+                    price: updateProductInfo.price,
                 }
             }
 
