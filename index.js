@@ -111,9 +111,9 @@ async function run() {
 run().catch(error => console.log(error))
 
 app.get("/", (req, res) => {
-    res.send("Moon Tech Redux Thunk Server!");
+    res.send("Moon Tech RTK Query Server!");
 });
 
 app.listen(port, () => {
-    console.log(`Moon Tech Redux Thunk Running on port ${port}`);
+    console.log(`Moon Tech RTK Query Running on port ${port}`);
 });
